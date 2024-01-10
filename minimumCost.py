@@ -18,10 +18,10 @@ class Solution(object):
 
             return dist
         
-        # Initialize conversion matrix
+        
         kk = [[float('inf')] * 26 for _ in range(26)]
         for i in range(len(original)):
-            kk[ord(original[i]) - ord('a')][ord(changed[i]) - ord('a')] = cost[i]
+            kk[ord(original[i]) - ord('a')][ord(changed[i]) - ord('a')] =min(cost[i],kk[ord(original[i]) - ord('a')][ord(changed[i]) - ord('a')]);
 
         res = floyd_warshall(kk)
         sum1 = 0
