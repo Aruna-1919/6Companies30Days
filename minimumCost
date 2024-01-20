@@ -1,0 +1,33 @@
+from collections import defaultdict
+class Solution:
+    def minimumCost(self, start: List[int], target: List[int], specialRoads: List[List[int]]) -> int:
+        def distance(point,target):
+            return abs(point[0]-target[0])+abs(point[1]-target[1])
+        q=[]
+        min_dist=float('inf')
+        costs= defaultdict()
+        costs[tuple(start)]=0
+        q.append([start,0])
+        print(costs,q)
+        while(len(q)>0):
+            ll=q.pop(0)
+            point=ll[0]
+            cost_point=ll[1]
+            if cost_point>costs.get(tuple(point)):
+                continue
+            costs[tuple(point)]=cost_point
+            min_dist=min(min_dist,cost_point+distance(point,target))
+            for road in specialRoads:
+                startofroad=tuple([road[0],road[1]])
+                endofroad=tuple([road[2],road[3]])
+                road_cost=road[4]
+                costofendroad=cost_point+distance(point,startofroad)+road_cost
+                if costofendroad>=costs.get(endofroad,float('inf')):
+                    continue
+                costs[endofroad]=costofendroad
+                q.append([endofroad,costofendroad])
+            
+        return min_dist
+
+
+        
